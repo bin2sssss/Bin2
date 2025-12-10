@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>我的勇者 伤害计算器</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="calculator">
+        <h2>伤害计算器</h2>
+       <div class="input-columns">
+        <div class="input-group">
+            <label>基础攻强：</label>
+            <input type="number" id="baseAttack" value="0">
+        </div>
+
+        <div class="input-group">
+            <label>百分比攻强：</label>
+            <input type="number" id="pctAttack" value="0">
+        </div>
+
+       
+        <div class="input-group">
+            <label>固定攻强：</label>
+            <input type="number" id="fixAttack" value="0">
+        </div>
+
+        <div class="input-group">
+            <label>暴击值：</label>
+            <input type="number" id="critValue" value="750">
+        </div>
+
+       
+        <div class="input-group">
+            <label>暴击抗性：</label>
+            <input type="number" id="critresist" value="0">
+        </div>
+
+        <div class="input-group">
+            <label>爆伤值：</label>
+            <input type="number" id="critnum" value="0">
+        </div>
+
+
+       
+        <div class="input-group">
+            <label>基础属攻：</label>
+            <input type="number" id="baseSG" value="0">
+        </div>
+
+        <div class="input-group">
+            <label>临时属攻：</label>
+            <input type="number" id="tempSG" value="0">
+        </div>
+
+
+       
+        <div class="input-group">
+            <label>护甲穿透：</label>
+            <input type="number" id="hjct" value="0">
+        </div>
+
+        <div class="input-group">
+            <label>怪物护甲：</label>
+            <input type="number" id="gwhj" value="0">
+        </div>
+
+
+       
+        <div class="input-group">
+            <label>元素穿透：</label>
+            <input type="number" id="ysct" value="0">
+        </div>
+
+        <div class="input-group">
+            <label>元素抗性：</label>
+            <input type="number" id="yskx" value="0">
+        </div>
+
+
+       
+        <div class="input-group">
+            <label>首领伤害：</label>
+            <input type="number" id="slsh" value="0">
+        </div>
+
+        <div class="input-group">
+            <label>技能伤害：</label>
+            <input type="number" id="jnsh" value="0">
+        </div>
+
+
+       
+        <div class="input-group">
+            <label>元素伤害：</label>
+            <input type="number" id="yssh" value="0">
+        </div>
+
+        <div class="input-group">
+            <label>伤害加成：</label>
+            <input type="number" id="shjc" value="0">
+        </div>
+
+
+       
+        <div class="input-group">
+            <label>一般易伤：</label>
+            <input type="number" id="ybys" value="0">
+        </div>
+
+        <div class="input-group">
+            <label>宠物易伤：</label>
+            <input type="number" id="cwys" value="0">
+        </div>
+
+
+        <div class="input-group">
+            <label>元素易伤：</label>
+            <input type="number" id="ysys" value="0">
+        </div>
+
+        <div class="input-group">
+            <label>属性压制：</label>
+            <input type="number" id="sxyz" value="0">
+        </div>
+
+
+        <div class="input-group">
+            <label>克制增幅：</label>
+            <input type="number" id="kzzf" value="0">
+        </div>
+
+
+        <div class="input-group">
+            <label>伤害增幅：</label>
+            <input type="number" id="shzf" value="0">
+        </div>
+
+
+      </div>
+
+        <!-- 更多输入字段... -->
+
+
+<div class="result-container">
+    <button onclick="calculateDamage()">计算伤害</button>
+    <div id="damageResult">伤害指数：0</div>
+    <div id="damageChange" style="margin-top: 10px; color: #666;"></div>
+</div>
+
+
+<div class="calculator-notes" style="margin-top: 30px; color: #666; font-size: 0.9em; border-top: 1px solid #ddd; padding-top: 20px;">
+    <h3>参数说明</h3>
+    <p style="margin-top: 15px;">* （如有疑问联系Q425339265） 百分比攻强、暴击抗性、首领伤害、技能伤害、元素伤害、伤害加成、一般易伤、宠物易伤、元素易伤、属性压制、克制增幅、伤害增幅 输入均为百分比形式，如10%请填写0.1</p>
+</div>
+
+    <script src="calc.js"></script>
+</body>
+</html>

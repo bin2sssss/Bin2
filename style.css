@@ -1,0 +1,29 @@
+/* 关键修复代码 */
+.input-columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(360px, 1fr)); /* 设定最小列宽 */
+    column-gap: 60px; /* 加大列间距 */
+}
+
+.input-group {
+    display: grid;
+    grid-template-columns: 110px 1fr; /* 精确控制标签宽度 */
+    align-items: center;
+}
+
+/* 新增对齐修正 */
+.input-columns > div:nth-child(odd) {  /* 左列 */
+    justify-self: end; /* 右对齐 */
+    width: 360px; /* 固定左列宽度 */
+}
+
+.input-columns > div:nth-child(even) { /* 右列 */
+    justify-self: start; /* 左对齐 */
+    width: 360px; /* 固定右列宽度 */
+}
+
+/* 输入框统一宽度 */
+input {
+    width: 220px !important; /* 覆盖原有宽度 */
+    max-width: none;
+}
