@@ -1,29 +1,425 @@
-/* 关键修复代码 */
+/* ============================
+   伤害计算器 UI 优化样式 - 完整版
+   ============================ */
+
+/* 1. CSS Reset & 基础样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+                 'Helvetica Neue', Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 25px 30px;
+    color: #1e293b;
+    line-height: 1.5;
+}
+
+/* 2. 容器样式 */
+.calculator {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 28px 40px;
+    box-shadow:
+        0 20px 40px -12px rgba(0, 0, 0, 0.2),
+        0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+/* 标题样式 */
+.calculator h2 {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* 3. 配置保存区域 */
+.config-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 12px 16px;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-radius: 10px;
+    flex-wrap: wrap;
+}
+
+.config-section select {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: 2px solid #e2e8f0;
+    border-radius: 6px;
+    background: #fff;
+    min-width: 150px;
+}
+
+.config-btn {
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: #6366f1;
+    color: #fff;
+}
+
+.config-btn:hover {
+    background: #4f46e5;
+}
+
+.config-btn.delete {
+    background: #ef4444;
+}
+
+.config-btn.delete:hover {
+    background: #dc2626;
+}
+
+.config-btn.compare {
+    background: #f59e0b;
+}
+
+.config-btn.compare:hover {
+    background: #d97706;
+}
+
+.compare-result {
+    margin-top: 10px;
+    padding: 12px 16px;
+    background: #f0fdf4;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #1e293b;
+    display: none;
+}
+
+.compare-result:not(:empty) {
+    display: block;
+}
+
+/* 4. 输入区域布局 - 四列 */
 .input-columns {
     display: grid;
-    grid-template-columns: repeat(2, minmax(360px, 1fr)); /* 设定最小列宽 */
-    column-gap: 60px; /* 加大列间距 */
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px 28px;
+    margin-bottom: 24px;
 }
 
+/* 输入组样式 */
 .input-group {
-    display: grid;
-    grid-template-columns: 110px 1fr; /* 精确控制标签宽度 */
+    display: flex;
     align-items: center;
+    gap: 12px;
 }
 
-/* 新增对齐修正 */
-.input-columns > div:nth-child(odd) {  /* 左列 */
-    justify-self: end; /* 右对齐 */
-    width: 360px; /* 固定左列宽度 */
+.input-group label {
+    min-width: 95px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #475569;
+    text-align: right;
 }
 
-.input-columns > div:nth-child(even) { /* 右列 */
-    justify-self: start; /* 左对齐 */
-    width: 360px; /* 固定右列宽度 */
+/* 5. 输入框样式 */
+input[type="number"] {
+    flex: 1;
+    max-width: 130px;
+    padding: 12px 14px;
+    font-size: 16px;
+    font-weight: 500;
+
+    background: #ffffff;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+
+    transition: all 0.2s ease;
+
+    -moz-appearance: textfield;
 }
 
-/* 输入框统一宽度 */
-input {
-    width: 220px !important; /* 覆盖原有宽度 */
-    max-width: none;
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"]:hover {
+    border-color: #cbd5e1;
+}
+
+input[type="number"]:focus {
+    outline: none;
+    border-color: #6366f1;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+}
+
+/* 6. 结果容器 */
+.result-container {
+    text-align: center;
+    padding: 22px 28px;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-radius: 14px;
+    margin-top: 20px;
+}
+
+/* 按钮行 */
+.button-row {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+/* 7. 主按钮样式 */
+.result-container button:not(.reset-btn):not(.config-btn) {
+    padding: 18px 56px;
+    min-width: 200px;
+    font-size: 20px;
+    font-weight: 600;
+
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+}
+
+.result-container button:not(.reset-btn):not(.config-btn):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+}
+
+.result-container button:not(.reset-btn):not(.config-btn):active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
+}
+
+/* 重置按钮 */
+.reset-btn {
+    padding: 18px 40px;
+    font-size: 18px;
+    font-weight: 600;
+
+    background: #94a3b8;
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.reset-btn:hover {
+    background: #64748b;
+    transform: translateY(-2px);
+}
+
+/* 8. 结果显示样式 */
+#damageResult {
+    font-size: 28px;
+    font-weight: 700;
+    color: #6366f1;
+    margin: 14px 0 10px;
+    padding: 14px 32px;
+    background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+    border-radius: 12px;
+    display: inline-block;
+    min-width: 200px;
+    box-shadow: 0 0 30px rgba(99, 102, 241, 0.2);
+}
+
+/* 变化百分比样式 */
+#damageChange {
+    font-size: 17px;
+    font-weight: 500;
+    margin-top: 10px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    display: inline-block;
+}
+
+#damageChange.positive {
+    color: #059669;
+    background: rgba(16, 185, 129, 0.1);
+}
+
+#damageChange.negative {
+    color: #dc2626;
+    background: rgba(239, 68, 68, 0.1);
+}
+
+/* 9. 各乘区详情 */
+.multiplier-details {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.multiplier-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+.multiplier-item {
+    display: flex;
+    flex-direction: column;
+    padding: 8px 12px;
+    background: #fff;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+}
+
+.multiplier-item span {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.multiplier-item strong {
+    font-size: 14px;
+    color: #6366f1;
+}
+
+/* 10. 说明区域 */
+.calculator-notes {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.calculator-notes h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 10px;
+}
+
+.calculator-notes p {
+    font-size: 14px;
+    color: #64748b;
+    line-height: 1.6;
+    background: #f8fafc;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border-left: 4px solid #6366f1;
+}
+
+/* 11. 响应式设计 */
+
+/* 平板 (1000px 及以下) - 双列 */
+@media (max-width: 1000px) {
+    body {
+        padding: 20px;
+    }
+
+    .calculator {
+        padding: 24px 32px;
+    }
+
+    .input-columns {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px 40px;
+    }
+
+    .input-group label {
+        min-width: 100px;
+    }
+
+    input[type="number"] {
+        max-width: 150px;
+    }
+
+    .multiplier-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* 手机 (600px 及以下) - 单列 */
+@media (max-width: 600px) {
+    body {
+        padding: 15px;
+    }
+
+    .calculator {
+        padding: 20px 24px;
+        border-radius: 14px;
+    }
+
+    .calculator h2 {
+        font-size: 26px;
+        margin-bottom: 20px;
+    }
+
+    .config-section {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .config-section select {
+        width: 100%;
+    }
+
+    .config-btn {
+        flex: 1;
+    }
+
+    .input-columns {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .input-group {
+        flex-direction: row;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .input-group label {
+        min-width: 90px;
+        font-size: 15px;
+    }
+
+    input[type="number"] {
+        width: 100%;
+        max-width: none;
+        padding: 12px 14px;
+    }
+
+    .button-row {
+        flex-direction: column;
+    }
+
+    .result-container button:not(.reset-btn):not(.config-btn),
+    .reset-btn {
+        width: 100%;
+        padding: 14px 28px;
+        font-size: 18px;
+    }
+
+    #damageResult {
+        font-size: 24px;
+        padding: 12px 24px;
+    }
+
+    .multiplier-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
